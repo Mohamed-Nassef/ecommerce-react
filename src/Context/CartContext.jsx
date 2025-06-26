@@ -6,16 +6,19 @@ import { createContext } from "react";
 export const CartContext = createContext();
 
 export default function CartContextProvider(props) {
-    let headers = {
-        token: localStorage.getItem("userToken"),
+    function getHeaders() {
+        return {
+            token: localStorage.getItem("userToken")
+        };
     }
+
 
     async function addToCart(productID) {
         try {
             const response = await axios.post(
                 `https://ecommerce.routemisr.com/api/v1/cart`,
                 { productId: productID },
-                { headers }
+                { headers: getHeaders() }
             );
             return response.data;
         } catch (error) {
@@ -24,7 +27,7 @@ export default function CartContextProvider(props) {
     }
     async function getCart() {
         try {
-            const response = await axios.get(`https://ecommerce.routemisr.com/api/v1/cart`, { headers });
+            const response = await axios.get(`https://ecommerce.routemisr.com/api/v1/cart`, { headers: getHeaders() });
             return response.data;
         } catch (error) {
             return null;
@@ -35,7 +38,7 @@ export default function CartContextProvider(props) {
             const response = await axios.put(
                 `https://ecommerce.routemisr.com/api/v1/cart/${productID}`,
                 { count: quantity, },
-                { headers }
+                { headers: getHeaders() }
             );
             return response.data;
         } catch (error) {
@@ -46,7 +49,7 @@ export default function CartContextProvider(props) {
         try {
             const response = await axios.delete(
                 `https://ecommerce.routemisr.com/api/v1/cart/${productID}`,
-                { headers }
+                { headers: getHeaders() }
             );
             return response.data;
         } catch (error) {
@@ -57,7 +60,7 @@ export default function CartContextProvider(props) {
         try {
             const response = await axios.delete(
                 `https://ecommerce.routemisr.com/api/v1/cart/${cartID}`,
-                { headers }
+                { headers: getHeaders() }
             );
             return response.data;
         } catch (error) {
