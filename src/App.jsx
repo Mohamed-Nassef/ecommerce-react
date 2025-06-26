@@ -1,6 +1,3 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import "slick-carousel/slick/slick.css";
@@ -27,6 +24,7 @@ let router = createBrowserRouter([
   {
     path: '', element: <Layout />, children: [
       { index: true, element: <ProtectedRoute><Home /></ProtectedRoute> },
+      { path: 'ecommerce-react', element: <ProtectedRoute><Home /></ProtectedRoute> },
       { path: 'cart', element: <ProtectedRoute><Cart /></ProtectedRoute> },
       { path: 'brands', element: <ProtectedRoute><Brands /></ProtectedRoute> },
       { path: 'register', element: <Register /> },
