@@ -5,29 +5,22 @@ import logo from '../../assets/freshcart-logo.svg';
 import { FaFacebook, FaInstagram, FaYoutube, FaTiktok, FaTwitter } from "react-icons/fa";
 
 export default function Navbar() {
-  // Using useContext to access the UserContext
-  const { token, setToken, name, setName } = useContext(UserContext);
+  const { token, setToken, name, setName, email, setEmail } = useContext(UserContext);
   const navigate = useNavigate();
-  // State to manage the open/close state of the mobile menu and user menu
   const [menuOpen, setMenuOpen] = useState(false);
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
 
-  // Function to handle sign out
-  // This function will remove the user token and name from localStorage
   function signout() {
     localStorage.removeItem("userToken");
     setToken(null);
     localStorage.removeItem("userName");
     setName(null);
-    setUserMenuOpen(false);
+    localStorage.removeItem("userEmail");
+    setEmail(null);
     navigate("/login");
   }
 
-  // Function to generate classes for navigation links based on active state
-  // This function will return different classes based on whether the link is active or not
-  // It will be used to style the links in the navigation bar
   const navLinkClasses = ({ isActive }) =>
-    isActive ? "text-emerald-600 font-semibold transition duration-200" : "hover:text-emerald-600 transition duration-200";
+    isActive ? "text-emerald-600 font-semibold transition duration-200 block" : "hover:text-emerald-600 transition duration-200 block";
 
   return (
     <nav className="bg-slate-200 fixed top-0 left-0 right-0 z-50 shadow-md">
@@ -36,20 +29,11 @@ export default function Navbar() {
           <img src={logo} width={110} alt="Logo" />
         </NavLink>
 
-        {/* Mobile Menu Button */}
-        {/* This button will toggle the mobile menu open/close state */}
         <button onClick={() => setMenuOpen(!menuOpen)} className="lg:hidden text-gray-700 focus:outline-none">
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2}
-            viewBox="0 0 24 24">
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
-
-
-        {/* Desktop Navigation Links */}
-        {/* These links will be displayed on larger screens */}
-        {/* They will only be visible when the user is logged in */}
-        {/* The links will use NavLink to apply active styles when the link is active */}
 
         <div className="hidden lg:flex items-center gap-6 text-sm font-medium text-gray-600">
           {token && (
@@ -63,7 +47,6 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Social + Auth */}
         <div className="hidden lg:flex items-center gap-4 text-gray-600 text-xl">
           <FaFacebook className="hover:text-blue-600 cursor-pointer" />
           <FaInstagram className="hover:text-pink-500 cursor-pointer" />
@@ -71,62 +54,36 @@ export default function Navbar() {
           <FaTiktok className="hover:text-black cursor-pointer" />
           <FaTwitter className="hover:text-blue-400 cursor-pointer" />
 
-          <div className="ml-4 relative">
-            {!token ? (
-              <div className="flex gap-4 text-sm">
-                <NavLink to="/login" className={navLinkClasses}>Login</NavLink>
-                <NavLink to="/register" className={navLinkClasses}>Register</NavLink>
-              </div>
-            ) : (
-              <div className="relative">
-                <button
-                  onClick={() => setUserMenuOpen(!userMenuOpen)}
-                  className="flex items-center gap-1 text-sm hover:text-emerald-600 cursor-pointer"
-                >
-                  👤 {name}
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
-                </button>
-                {userMenuOpen && (
-                  <ul className="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded border text-sm text-gray-700 z-50">
-                    <li><NavLink to="/" className="block px-4 py-2 hover:bg-gray-100">Profile</NavLink></li>
-                    <li><NavLink to="/cart" className="block px-4 py-2 hover:bg-gray-100">Orders</NavLink></li>
-                    <li><button onClick={signout} className="w-full text-left px-4 py-2 hover:bg-red-100 text-red-600">Sign Out</button></li>
-                  </ul>
-                )}
-              </div>
-            )}
-          </div>
+          {token ? (
+            <button onClick={signout} className="text-sm text-red-600 hover:text-red-800 ml-4">Sign Out</button>
+          ) : (
+            <div className="flex gap-4 text-sm">
+              <NavLink to="/login" className={navLinkClasses}>Login</NavLink>
+              <NavLink to="/register" className={navLinkClasses}>Register</NavLink>
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      {menuOpen && (
-        <div className="lg:hidden px-4 pb-4 space-y-2 text-sm font-medium text-gray-700">
-          {token && (
-            <>
-              <NavLink to="/" className={navLinkClasses}>Home</NavLink>
-              <NavLink to="/cart" className={navLinkClasses}>Cart</NavLink>
-              <NavLink to="/products" className={navLinkClasses}>Products</NavLink>
-              <NavLink to="/categories" className={navLinkClasses}>Categories</NavLink>
-              <NavLink to="/brands" className={navLinkClasses}>Brands</NavLink>
-            </>
-          )}
-          {!token ? (
-            <>
-              <NavLink to="/login" className={navLinkClasses}>Login</NavLink>
-              <NavLink to="/register" className={navLinkClasses}>Register</NavLink>
-            </>
-          ) : (
-            <>
-              <NavLink to="/" className={navLinkClasses}>Profile</NavLink>
-              <NavLink to="/cart" className={navLinkClasses}>Orders</NavLink>
-              <button onClick={signout} className="text-red-600 hover:text-red-800 cursor-pointer">Sign Out</button>
-            </>
-          )}
-        </div>
-      )}
+      <div className={`lg:hidden transition-all duration-300 overflow-hidden ${menuOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'} px-4 pb-4 text-sm font-medium text-gray-700 flex flex-col space-y-2`}>
+        {token && (
+          <>
+            <NavLink to="/" className={navLinkClasses} onClick={() => setMenuOpen(false)}>Home</NavLink>
+            <NavLink to="/cart" className={navLinkClasses} onClick={() => setMenuOpen(false)}>Cart</NavLink>
+            <NavLink to="/products" className={navLinkClasses} onClick={() => setMenuOpen(false)}>Products</NavLink>
+            <NavLink to="/categories" className={navLinkClasses} onClick={() => setMenuOpen(false)}>Categories</NavLink>
+            <NavLink to="/brands" className={navLinkClasses} onClick={() => setMenuOpen(false)}>Brands</NavLink>
+          </>
+        )}
+        {!token ? (
+          <>
+            <NavLink to="/login" className={navLinkClasses} onClick={() => setMenuOpen(false)}>Login</NavLink>
+            <NavLink to="/register" className={navLinkClasses} onClick={() => setMenuOpen(false)}>Register</NavLink>
+          </>
+        ) : (
+          <button onClick={() => { signout(); setMenuOpen(false); }} className="text-red-600 hover:text-red-800 cursor-pointer">Sign Out</button>
+        )}
+      </div>
     </nav>
   );
 }

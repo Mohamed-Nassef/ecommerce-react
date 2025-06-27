@@ -7,7 +7,8 @@ import * as Yup from 'yup';
 import { UserContext } from '../../Context/UserContext';
 
 export default function Login() {
-  const { setToken, setName } = useContext(UserContext);
+  const { setToken, setName, setEmail } = useContext(UserContext);
+
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const [apiError, setApiError] = useState(null);
@@ -28,12 +29,14 @@ export default function Login() {
     try {
       let { data } = await axios.post('https://ecommerce.routemisr.com/api/v1/auth/signin', values);
       if (data.message === 'success') {
-        console.log(data.user.name);
+        //console.log(data.user.email);
 
         localStorage.setItem('userToken', data.token);
         setToken(data.token)
         localStorage.setItem('userName', data.user.name);
         setName(data.user.name);
+        localStorage.setItem('userEmail', data.user.email);
+        setEmail(data.user.email);
         setSuccessMessage("Login successful! Redirecting...");
         formik.resetForm();
         setTimeout(() => {

@@ -97,8 +97,8 @@ export default function Cart() {
         </button>
       </div>
 
-      {loading ? (<Spinner />) : cartItems?.products?.length > 0 ? (
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      {loading ? (<Spinner />) : cartItems?.products?.length > 0 ? (<>
+        <table className="hidden md:table w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 border-b uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="px-16 py-3">Image</th>
@@ -113,8 +113,8 @@ export default function Cart() {
               <tr key={item.product.id} className="bg-white  dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600">
                 <td className="p-4">
                   <Link to={`/productsdetails/${item.product.id}`}>
-                  <img src={item.product.imageCover} className="w-16 md:w-32 max-w-full max-h-full" alt="Product" />
-                </Link>
+                    <img src={item.product.imageCover} className="w-16 md:w-32 max-w-full max-h-full" alt="Product" />
+                  </Link>
                 </td>
                 <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
                   {item.product.title.length > 30 ? item.product.title.slice(0, 25) + '...' : item.product.title}
@@ -169,6 +169,30 @@ export default function Cart() {
             ))}
           </tbody>
         </table>
+        <div className="md:hidden flex flex-col gap-4 p-4">
+          {cartItems?.products.map((item) => (
+            <div key={item.product.id} className="bg-white p-4 rounded shadow">
+              <Link to={`/productsdetails/${item.product.id}`} className="flex items-center gap-4 mb-2">
+                <img src={item.product.imageCover} className="w-20 h-20 object-cover rounded" alt={item.product.title} />
+                <div>
+                  <h3 className="font-semibold text-gray-800">{item.product.title.length > 30 ? item.product.title.slice(0, 25) + '...' : item.product.title}</h3>
+                  <p className="text-sm text-gray-500">Price: {item.price * item.count} EGP</p>
+                  <p className="text-sm text-gray-500">Qty: {item.count}</p>
+                </div>
+              </Link>
+              <div className="flex justify-between items-center mt-2">
+                <div className="flex gap-2">
+                  <button onClick={() => handleUpdateQuantity(item.product.id, item.count - 1)} className="px-2 py-1 border rounded text-gray-600">-</button>
+                  <span>{item.count}</span>
+                  <button onClick={() => handleUpdateQuantity(item.product.id, item.count + 1)} className="px-2 py-1 border rounded text-gray-600">+</button>
+                </div>
+                <button onClick={() => handleDeleteItem(item.product.id)} className="text-red-600">Remove</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </>
+
       ) : (
         <div className="text-center p-10">
           <h2 className="text-2xl font-semibold text-gray-700">Your cart is empty</h2>
