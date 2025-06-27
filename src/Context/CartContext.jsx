@@ -1,18 +1,16 @@
-
-
 import axios from "axios";
-import { createContext } from "react";
+import { createContext, useState, useEffect } from "react";
 
 export const CartContext = createContext();
 
 export default function CartContextProvider(props) {
+    const [cartcount, setCartcount] = useState(0);
     function getHeaders() {
         return {
             token: localStorage.getItem("userToken")
         };
     }
-
-
+    
     async function addToCart(productID) {
         try {
             const response = await axios.post(
@@ -20,6 +18,8 @@ export default function CartContextProvider(props) {
                 { productId: productID },
                 { headers: getHeaders() }
             );
+            console.log(response.data);
+            setCartcount(response.data.numOfCartItems)
             return response.data;
         } catch (error) {
             return null;
@@ -40,6 +40,7 @@ export default function CartContextProvider(props) {
                 { count: quantity, },
                 { headers: getHeaders() }
             );
+            setCartcount(response.data.numOfCartItems);
             return response.data;
         } catch (error) {
             return null;
@@ -51,6 +52,7 @@ export default function CartContextProvider(props) {
                 `https://ecommerce.routemisr.com/api/v1/cart/${productID}`,
                 { headers: getHeaders() }
             );
+            setCartcount(response.data.numOfCartItems);
             return response.data;
         } catch (error) {
             return null;
@@ -62,14 +64,28 @@ export default function CartContextProvider(props) {
                 `https://ecommerce.routemisr.com/api/v1/cart/${cartID}`,
                 { headers: getHeaders() }
             );
+            setCartcount(response.data.numOfCartItems);
             return response.data;
         } catch (error) {
             return null;
         }
     }
 
+    useEffect(() => {
+        async function fetchCartCount() {
+            const data = await getCart();
+            if (data?.numOfCartItems !== undefined) {
+                setCartcount(data.numOfCartItems);
+            }
+        }
+
+        if (localStorage.getItem("userToken")) {
+            fetchCartCount();
+        }
+    }, []);
+
     return (
-        <CartContext.Provider value={{ addToCart, getCart, updateCartQuantity, deleteCartItem, deleteAllCartItems }}>
+        <CartContext.Provider value={{ addToCart, getCart, updateCartQuantity, deleteCartItem, deleteAllCartItems, cartcount }}>
             {props.children}
         </CartContext.Provider>
     );

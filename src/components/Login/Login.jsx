@@ -22,6 +22,7 @@ export default function Login() {
   // It will send a POST request to the API with the form values
   // If the registration is successful, it will navigate to the login page
   // If there is an error, it will log the error message to the console
+  // 
   async function handleLogin(values) {
     setIsLoading(true);
     setApiError(null);

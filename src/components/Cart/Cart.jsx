@@ -6,10 +6,9 @@ import Spinner from '../Spinner/Spinner';
 import { Link } from 'react-router-dom';
 
 export default function Cart() {
-
+  
   const { getCart, updateCartQuantity, deleteCartItem, deleteAllCartItems } = useContext(CartContext);
   const [cartItems, setCartItems] = useState(null);
-
   const [loading, setLoading] = useState(true);
   const [removingItemId, setRemovingItemId] = useState(null)
   const [updatingQtyId, setUpdatingQtyId] = useState(null);
@@ -19,6 +18,7 @@ export default function Cart() {
     const data = await getCart();
     if (data?.status === 'success') {
       setCartItems(data.data);
+      console.log(data.data);
     } else {
       console.error(data.message);
     }
