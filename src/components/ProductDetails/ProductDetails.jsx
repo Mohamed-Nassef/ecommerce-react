@@ -19,7 +19,6 @@ export default function ProductDetails() {
       return data.data;
     }
   });
-
   const product = data || {};
   const [mainImage, setMainImage] = useState(null);
 

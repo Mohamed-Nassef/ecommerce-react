@@ -15,6 +15,9 @@ import CounterContextProvider from './Context/CounterContext'
 import UserContextProvider from './Context/UserContext'
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 import ProductDetails from './components/ProductDetails/ProductDetails'
+import CategoriesDetails from './components/CategoriesDetails/CategoriesDetails'
+import SpecificSubCategory from './components/specificSubCategory/specificSubCategory'
+import SubCategoriesByCategoryWrapper from './components/SubCategoriesByCategoryWrapper/SubCategoriesByCategoryWrapper'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import CartContextProvider from './Context/CartContext'
@@ -32,6 +35,11 @@ let router = createBrowserRouter([
       { path: 'categories', element: <ProtectedRoute><Categories /></ProtectedRoute> },
       { path: 'products', element: <ProtectedRoute><Products /></ProtectedRoute> },
       { path: 'productsdetails/:id', element: <ProtectedRoute><ProductDetails /></ProtectedRoute> },
+      { path: 'categories/:id', element: <ProtectedRoute><CategoriesDetails /></ProtectedRoute> },
+      { path: '/categories/:id/subcategories', element: <ProtectedRoute><SubCategoriesByCategoryWrapper /></ProtectedRoute> },
+
+      { path: '/subcategories/:id', element: <ProtectedRoute><SpecificSubCategory /></ProtectedRoute> },
+
       { path: '*', element: <Notfound /> },
     ]
   },
