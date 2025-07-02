@@ -6,7 +6,7 @@ import Spinner from '../Spinner/Spinner';
 import { Link } from 'react-router-dom';
 
 export default function Cart() {
-  
+
   const { getCart, updateCartQuantity, deleteCartItem, deleteAllCartItems } = useContext(CartContext);
   const [cartItems, setCartItems] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -101,25 +101,25 @@ export default function Cart() {
         <table className="hidden md:table w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 border-b uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" className="px-16 py-3">Image</th>
-              <th scope="col" className="px-6 py-3">Product</th>
-              <th scope="col" className="px-6 py-3">Qty</th>
-              <th scope="col" className="px-6 py-3">Price</th>
-              <th scope="col" className="px-6 py-3">Action</th>
+              <th scope="col" className="text-center py-3 px-6">Image</th>
+              <th scope="col" className="text-center">Product</th>
+              <th scope="col" className="text-center">Qty</th>
+              <th scope="col" className="text-center">Price</th>
+              <th scope="col" className="text-center">Action</th>
             </tr>
           </thead>
           <tbody>
             {cartItems.products.map((item) => (
-              <tr key={item.product.id} className="bg-white  dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600">
-                <td className="p-4">
+              <tr key={item.product.id} className="bg-white border-b  dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600">
+                <td className="p-4 flex justify-center">
                   <Link to={`/productsdetails/${item.product.id}`}>
                     <img src={item.product.imageCover} className="w-16 md:w-32 max-w-full max-h-full" alt="Product" />
                   </Link>
                 </td>
-                <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                <td className="text-center px-6 py-4 font-semibold text-gray-900 dark:text-white">
                   {item.product.title.length > 30 ? item.product.title.slice(0, 25) + '...' : item.product.title}
                 </td>
-                <td className="px-6 py-4 min-w-[120px]">
+                <td className="px-6 py-4 text-center ">
                   <div className="flex items-center justify-center">
                     <button
                       onClick={() => item.count > 1 && handleUpdateQuantity(item.product.id, item.count - 1)}
@@ -149,7 +149,7 @@ export default function Cart() {
                     </button>
                   </div>
                 </td>
-                <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                <td className="text-center px-6 py-4 font-semibold text-gray-900 dark:text-white">
                   {item.price * item.count} EGP
                 </td>
                 <td className="px-6 py-4 min-w-[100px] text-center">
