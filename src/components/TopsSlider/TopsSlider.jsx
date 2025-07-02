@@ -34,7 +34,7 @@ export default function TopsSlider() {
     <>
 
       <div className=" container px-2 my-5 flex flex-row items-start ">
-        <div className='w-3/4 '>
+        <div className='w-full md:w-3/4 '>
           <Slider {...settings}>
             <div className="">
               <img src={slide3} alt="Slide 3" className="w-full h-60 object-cover" />
@@ -47,7 +47,7 @@ export default function TopsSlider() {
             </div>
           </Slider>
         </div>
-        <div className='w-1/4 sm:hidden flex flex-col items-start justify-start'>
+        <div className='hidden md:flex w-1/4 flex-col items-start justify-start'>
           <div className="">
             <img src={slide1} alt="Slide 1" className="w-full h-30 object-cover" />
           </div>
