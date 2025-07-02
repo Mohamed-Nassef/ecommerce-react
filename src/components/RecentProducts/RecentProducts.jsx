@@ -22,6 +22,9 @@ export default function RecentProducts({ cat, filterBy = 'name' }) {
     if (filterBy === 'id') {
       return product.category._id === cat;
     }
+    if (filterBy === 'idbrand') {
+      return product.brand._id === cat;
+    }
 
     return product.category.name === cat;
   }) || [];

@@ -14,6 +14,7 @@ export default function ProductCard({ product, onAddToCart, loadingId }) {
             <img src={product.imageCover} alt={product.title} className="w-full h-40 object-contain mb-3" />
             <p className="text-emerald-600 text-sm mb-1">{product.category.name}</p>
             <h3 className="text-sm font-medium h-10 line-clamp-2 overflow-hidden ">{product.title}</h3>
+            <h6 className='text-sm text-gray-500'>{product.brand.name}</h6>
             <div className="flex justify-between  w-full mt-2">
               <span className="text-sm font-semibold">{product.price} EGP</span>
               <span className="text-xs text-yellow-500">⭐ {product.ratingsAverage}</span>

@@ -3,6 +3,7 @@ import Slider from 'react-slick';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import Spinner from '../Spinner/Spinner';
+import { Link } from 'react-router-dom';
 export default function CategoriesSlider() {
 
   let { data, isLoading } = useQuery({
@@ -51,14 +52,14 @@ export default function CategoriesSlider() {
         <Slider {...settings}>
           {data.map(cat => (
             <div key={cat._id} className="px-0.5">
-              <div className="">
+              <Link to={`/categories/${cat._id}`}>
                 <img
                   src={cat.image}
                   alt={cat.name}
                   className="w-full h-35 object rounded mb-2"
                 />
                 <h3 className="text-sm font-medium">{cat.name}</h3>
-              </div>
+              </Link>
             </div>
           ))}
         </Slider>

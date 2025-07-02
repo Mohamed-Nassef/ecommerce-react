@@ -18,6 +18,7 @@ import ProductDetails from './components/ProductDetails/ProductDetails'
 import CategoriesDetails from './components/CategoriesDetails/CategoriesDetails'
 import SpecificSubCategory from './components/specificSubCategory/specificSubCategory'
 import SubCategoriesByCategoryWrapper from './components/SubCategoriesByCategoryWrapper/SubCategoriesByCategoryWrapper'
+import BrandsDetails from './components/BrandsDetails/BrandsDetails'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import CartContextProvider from './Context/CartContext'
@@ -30,6 +31,7 @@ let router = createBrowserRouter([
       { path: 'ecommerce-react', element: <ProtectedRoute><Home /></ProtectedRoute> },
       { path: 'cart', element: <ProtectedRoute><Cart /></ProtectedRoute> },
       { path: 'brands', element: <ProtectedRoute><Brands /></ProtectedRoute> },
+      { path: 'brands/:id', element: <ProtectedRoute><BrandsDetails /></ProtectedRoute> },
       { path: 'register', element: <Register /> },
       { path: 'login', element: <Login /> },
       { path: 'categories', element: <ProtectedRoute><Categories /></ProtectedRoute> },

@@ -82,8 +82,7 @@ export default function ProductDetails() {
             <button
               onClick={() => handleAddToCart(product._id)}
               disabled={loadingId === product._id}
-              className="w-full bg-green-600 hover:bg-green-700 transition text-white py-2 rounded text-sm font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-            >
+              className="w-full bg-green-600 hover:bg-green-700 transition text-white py-2 rounded text-sm font-medium cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
               {loadingId === product._id ? (
                 <span className="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full"></span>
               ) : (
