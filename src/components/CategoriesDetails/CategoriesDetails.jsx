@@ -25,12 +25,12 @@ export default function CategoriesDetails() {
   const { image, name, slug } = data;
 
   return (
-    <div className="container mx-auto px-4 py-10">
-      <div className=" mx-auto bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl transition duration-300">
+    <div className="">
+      <div className=" bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl transition duration-300">
         <img
           src={image || 'https://via.placeholder.com/600x400?text=No+Image'}
           alt={name}
-          className="w-full h-80 object-contain"
+          className="pt-6 w-full h-80 object-contain"
         />
         <div className="p-6 text-center">
           <h2 className="text-3xl font-bold text-gray-800">{name}</h2>

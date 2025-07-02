@@ -47,7 +47,7 @@ export default function TopsSlider() {
             </div>
           </Slider>
         </div>
-        <div className='w-1/4 flex flex-col items-start justify-start'>
+        <div className='w-1/4 sm:hidden flex flex-col items-start justify-start'>
           <div className="">
             <img src={slide1} alt="Slide 1" className="w-full h-30 object-cover" />
           </div>
