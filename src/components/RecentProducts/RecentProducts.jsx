@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 
 
 export default function RecentProducts({ cat, filterBy = 'name' }) {
-
+  // fatch all products
   let { data, isFetched, isLoading } = useQuery({
     queryKey: ['recentProducts'],
     queryFn: async () => {
@@ -16,6 +16,7 @@ export default function RecentProducts({ cat, filterBy = 'name' }) {
       return data.data;
     },
   });
+  // filter by category or brand or name
   const filteredProducts = data?.filter(product => {
     if (!cat) return true;
 

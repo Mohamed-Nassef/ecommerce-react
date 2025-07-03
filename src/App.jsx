@@ -19,9 +19,11 @@ import CategoriesDetails from './components/CategoriesDetails/CategoriesDetails'
 import SpecificSubCategory from './components/specificSubCategory/specificSubCategory'
 import SubCategoriesByCategoryWrapper from './components/SubCategoriesByCategoryWrapper/SubCategoriesByCategoryWrapper'
 import BrandsDetails from './components/BrandsDetails/BrandsDetails'
+import Wishlist from './components/Wishlist/Wishlist'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import CartContextProvider from './Context/CartContext'
+import WishlistContextProvider from './Context/WishlistContext';
 import { Toaster } from 'react-hot-toast';
 
 let router = createBrowserRouter([
@@ -39,7 +41,7 @@ let router = createBrowserRouter([
       { path: 'productsdetails/:id', element: <ProtectedRoute><ProductDetails /></ProtectedRoute> },
       { path: 'categories/:id', element: <ProtectedRoute><CategoriesDetails /></ProtectedRoute> },
       { path: '/categories/:id/subcategories', element: <ProtectedRoute><SubCategoriesByCategoryWrapper /></ProtectedRoute> },
-
+      { path: 'wishlist', element: <ProtectedRoute><Wishlist /></ProtectedRoute> },
       { path: '/subcategories/:id', element: <ProtectedRoute><SpecificSubCategory /></ProtectedRoute> },
 
       { path: '*', element: <Notfound /> },
@@ -55,9 +57,11 @@ function App() {
         <CounterContextProvider>
           <QueryClientProvider client={queryClient}>
             <CartContextProvider>
-              <RouterProvider router={router}></RouterProvider>
-              <ReactQueryDevtools initialIsOpen={false} />
-              <Toaster />
+              <WishlistContextProvider>
+                <RouterProvider router={router} />
+                <Toaster />
+                <ReactQueryDevtools initialIsOpen={false} />
+              </WishlistContextProvider>
             </CartContextProvider>
           </QueryClientProvider>
         </CounterContextProvider>

@@ -5,12 +5,13 @@ export const CartContext = createContext();
 
 export default function CartContextProvider(props) {
     const [cartcount, setCartcount] = useState(0);
+
     function getHeaders() {
         return {
             token: localStorage.getItem("userToken")
         };
     }
-    
+
     async function addToCart(productID) {
         try {
             const response = await axios.post(
@@ -18,7 +19,7 @@ export default function CartContextProvider(props) {
                 { productId: productID },
                 { headers: getHeaders() }
             );
-            console.log(response.data);
+            //console.log(response.data);
             setCartcount(response.data.numOfCartItems)
             return response.data;
         } catch (error) {
@@ -33,6 +34,7 @@ export default function CartContextProvider(props) {
             return null;
         }
     }
+
     async function updateCartQuantity(productID, quantity) {
         try {
             const response = await axios.put(
@@ -78,7 +80,6 @@ export default function CartContextProvider(props) {
                 setCartcount(data.numOfCartItems);
             }
         }
-
         if (localStorage.getItem("userToken")) {
             fetchCartCount();
         }

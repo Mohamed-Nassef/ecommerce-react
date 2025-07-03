@@ -18,7 +18,7 @@ export default function Cart() {
     const data = await getCart();
     if (data?.status === 'success') {
       setCartItems(data.data);
-      console.log(data.data);
+      //console.log(data.data);
     } else {
       console.error(data.message);
     }
@@ -110,7 +110,7 @@ export default function Cart() {
           </thead>
           <tbody>
             {cartItems.products.map((item) => (
-              <tr key={item.product.id} className="bg-white border-b  dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600">
+              <tr key={item.product.id} className="bg-white b  dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600">
                 <td className="p-4 flex justify-center">
                   <Link to={`/productsdetails/${item.product.id}`}>
                     <img src={item.product.imageCover} className="w-16 md:w-32 max-w-full max-h-full" alt="Product" />
@@ -149,8 +149,8 @@ export default function Cart() {
                     </button>
                   </div>
                 </td>
-                <td className="text-center px-6 py-4 font-semibold text-gray-900 dark:text-white">
-                  {item.price * item.count} EGP
+                <td className="text-center px-6 py-4 font-semibold text-gray-900 dark:text-white text-sm">
+                  <span className="text-emerald-600 font-semibold">{item.price} EGP</span>
                 </td>
                 <td className="px-6 py-4 min-w-[100px] text-center">
                   <button
@@ -169,28 +169,53 @@ export default function Cart() {
             ))}
           </tbody>
         </table>
+        {/* Mobile View */}
         <div className="md:hidden flex flex-col gap-4 p-4">
           {cartItems?.products.map((item) => (
-            <div key={item.product.id} className="bg-white p-4 rounded shadow">
-              <Link to={`/productsdetails/${item.product.id}`} className="flex items-center gap-4 mb-2">
-                <img src={item.product.imageCover} className="w-20 h-20 object-cover rounded" alt={item.product.title} />
-                <div>
-                  <h3 className="font-semibold text-gray-800">{item.product.title.length > 30 ? item.product.title.slice(0, 25) + '...' : item.product.title}</h3>
-                  <p className="text-sm text-gray-500">Price: {item.price * item.count} EGP</p>
-                  <p className="text-sm text-gray-500">Qty: {item.count}</p>
+            <div key={item.product.id} className="bg-white p-4 rounded-xl shadow-lg border border-gray-100">
+              <Link to={`/productsdetails/${item.product.id}`} className="flex items-center gap-4">
+                <img
+                  src={item.product.imageCover}
+                  className="w-24 h-24 object-contain rounded-lg border"
+                  alt={item.product.title}
+                />
+                <div className="flex-1">
+                  <h3 className="font-semibold text-gray-800 text-sm">
+                    {item.product.title.length > 30 ? item.product.title.slice(0, 25) + '...' : item.product.title}
+                  </h3>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Price : <span className="text-emerald-600 font-semibold">{item.price} EGP</span><br></br>
+                    Total Price: <span className="text-emerald-600 font-semibold">{item.price * item.count} EGP</span>
+                  </p>
+                  <p className="text-xs text-gray-500">Qty: {item.count}</p>
                 </div>
               </Link>
-              <div className="flex justify-between items-center mt-2">
-                <div className="flex gap-2">
-                  <button onClick={() => handleUpdateQuantity(item.product.id, item.count - 1)} className="px-2 py-1 border rounded text-gray-600">-</button>
-                  <span>{item.count}</span>
-                  <button onClick={() => handleUpdateQuantity(item.product.id, item.count + 1)} className="px-2 py-1 border rounded text-gray-600">+</button>
+
+              <div className="flex justify-between items-center gap-4 mt-4">
+                <div className="flex gap-2 items-center">
+                  <button
+                    onClick={() => handleUpdateQuantity(item.product.id, item.count - 1)}
+                    className="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded text-lg text-gray-700 font-bold"
+                  >−</button>
+                  {updatingQtyId === item.product.id ? (<div className="animate-spin w-4 h-4 border-[3px] border-current border-t-transparent text-green-500 rounded-full" />) :
+                    (<span className="text-sm font-medium">{item.count}</span>)}
+                  <button
+                    onClick={() => handleUpdateQuantity(item.product.id, item.count + 1)}
+                    className="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded text-lg text-gray-700 font-bold"
+                  >+</button>
                 </div>
-                <button onClick={() => handleDeleteItem(item.product.id)} className="text-red-600">Remove</button>
+
+                <button
+                  onClick={() => handleDeleteItem(item.product.id)}
+                  className="bg-red-100 hover:bg-red-200 text-red-600 text-sm px-3 py-2 rounded-md border border-red-400"
+                >
+                  Remove
+                </button>
               </div>
             </div>
           ))}
         </div>
+
       </>
 
       ) : (
